@@ -68,17 +68,28 @@ function App() {
         setSummary(res.data.summary);
       }
     } catch (err) {
-      console.error(err);
-      alert("Something went wrong.");
-    } finally {
+  console.error(err);
+
+  if (err.response) {
+    console.log(err.response.data);
+    alert(err.response.data.error);
+  } else {
+    alert(err.message);
+  }
+}
+    finally {
       setLoading(false);
     }
   };
 
   return (
     <div className="App">
-      <h1>🧠 AI Summarizer (Text, PDF & YouTube)</h1>
+      <div className="container">
+      <h1 className="title">🧠 AI Summarizer</h1>
 
+      <p className="subtitle">
+      Summarize Text, PDFs and YouTube videos instantly using Gemini AI.
+      </p>
       <div className="mode-buttons">
         <button
           className={mode === "text" ? "active" : ""}
@@ -128,7 +139,7 @@ function App() {
         />
       )}
 
-      <button onClick={handleSummarize} disabled={loading}>
+      <button className="summarize-btn" onClick={handleSummarize} disabled={loading}>
         {loading ? "Summarizing..." : "Summarize"}
       </button>
 
@@ -139,6 +150,7 @@ function App() {
         </div>
       )}
     </div>
+  </div>
   );
 }
 
